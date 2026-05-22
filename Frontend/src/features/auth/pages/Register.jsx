@@ -7,7 +7,7 @@ const Register = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
-   const navigate = useNavigate()
+  const navigate = useNavigate()
   const { handleRegister } = useAuth()
 
   const submitForm = async (event) => {
@@ -33,13 +33,16 @@ const Register = () => {
         throw new Error("Password must be at least 8 characters")
       }
 
-      await handleRegister(payload)
+      const res = await handleRegister(payload)
       // clear sensitive data
-      setPassword('')
-      setEmail('');
-      setUsername('')
 
-     navigate('/login')
+      if (res.success) {
+        setPassword('')
+        setEmail('');
+        setUsername('')
+        navigate('/login')
+      }
+
 
     } catch (error) {
       console.error(

@@ -14,7 +14,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(morgan("dev"));
 app.use(cors({
-    origin: process.env.BASE_URL,
+    origin: process.env.CLIENT_BASE_URL,
     credentials: true,
     methods: [ "GET", "POST", "PUT", "DELETE" ],
 }))
