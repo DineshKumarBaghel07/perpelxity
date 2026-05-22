@@ -9,7 +9,7 @@ An AI-powered conversational web application inspired by Perplexity AI that allo
 ### 🤖 Multi-LLM Support
 - Integrated **Google Gemini**
 - Integrated **Mistral AI**
-- Users can switch between AI models for different responses.
+
 
 ### 🔐 Authentication & Security
 - JWT-based Authentication
@@ -171,6 +171,3 @@ npm run dev
 
 Developed by **Dinesh Singh**
 
----
-
-⭐ If you like this project, give it a star.
