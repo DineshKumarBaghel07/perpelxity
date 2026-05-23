@@ -2,16 +2,16 @@ import nodemailer from "nodemailer";
 import dotenv from 'dotenv'
 dotenv.config();
 const transporter = nodemailer.createTransport({
-    host: "smtp.gmail.com",
-    port: 587,
-    secure: false,
+       service: "gmail",
     auth: {
         type: 'OAuth2',
         user: process.env.GOOGLE_USER,
         clientSecret: process.env.CLIENT_SECRET,
         refreshToken: process.env.GOOGLE_REFREASH_TOKEN,
         clientId: process.env.CLIENT_ID
-    }
+    },
+    connectionTimeout: 30000,
+        greetingTimeout: 30000
 })
 
 transporter.verify()
