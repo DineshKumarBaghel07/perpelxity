@@ -12,7 +12,7 @@ import { sendEmail } from "../services/mail.service.js";
 export async function register(req, res) {
 
     const { username, email, password } = req.body;
-     console.log("Registering user:", { username,email,password});
+
     const isUserAlreadyExists = await userModel.findOne({
         $or: [ { email }, { username } ]
     })
@@ -100,9 +100,7 @@ export async function login(req, res) {
         username: user.username,
     }, process.env.JWT_SECRET, { expiresIn: '7d' })
 
-    res.cookie("token", token,{
-        
-    })
+    res.cookie("token", token)
 
     res.status(200).json({
         message: "Login successful",

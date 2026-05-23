@@ -18,7 +18,7 @@ app.use(cors({
     credentials: true,
     methods: [ "GET", "POST", "PUT", "DELETE" ],
 }))
-app.options("*", cors());
+
 
 // Health check
 app.get("/", (req, res) => {
