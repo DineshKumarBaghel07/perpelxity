@@ -1,44 +1,56 @@
-import nodemailer from "nodemailer";
-import dotenv from "dotenv";
-
+import nodemailer from "nodemailer"
+import dotenv from "dotenv"
 dotenv.config();
 
-const transporter = nodemailer.createTransport({
-    service: "gmail",
 
+const transporter = new nodemailer.createTransport({
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true,
+    dnsLookup: (hostname, options, callback) => {
+        require('dns').lookup(hostname, { family: 4 }, callback);
+    },
     auth: {
         type: "OAuth2",
         user: process.env.GOOGLE_USER,
         clientId: process.env.CLIENT_ID,
         clientSecret: process.env.CLIENT_SECRET,
         refreshToken: process.env.GOOGLE_REFRESH_TOKEN
+
     }
-});
+})
 
-// REMOVE VERIFY
-// transporter.verify()
+transporter.verify((error, success) => {
+    if (error) {
+        console.error("Error connecting to Email server" + error)
+    } else {
+        console.log("Email server is ready to send Messages")
+    }
+})
 
-export async function sendEmail({
-    to,
-    subject,
-    html,
-    text
-}) {
+
+
+
+const sendMail = async (to, subject, html, text) => {
+    const mailOpation = {
+        from: `Dinesh<${process.env.GOOGLE_USER}>`,
+        to,
+        subject,
+        text,
+        html
+    }
 
     try {
-        const details =
-            await transporter.sendMail({
-                from: process.env.GOOGLE_USER,
-                to,
-                subject,
-                html,
-                text
-            });
-
-        console.log(details);
-
+        const response = await transporter.sendMail(mailOpation)
+        console.log(response)
+        //   return ("send to the mail this"+to)
     } catch (err) {
-        console.log("EMAIL ERROR");
-        console.log(err);
+        console.log(err)
     }
+
+
+
 }
+
+
+export default sendMail;
